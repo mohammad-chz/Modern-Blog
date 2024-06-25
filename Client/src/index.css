@@ -25,3 +25,7 @@ body{
   padding: 0px;
   direction: rtl;
 }
+
+.margin-right {
+  margin-right: 0px !important;
+}

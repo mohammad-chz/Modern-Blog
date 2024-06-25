@@ -1,7 +1,7 @@
 import { Footer } from 'flowbite-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { BsFacebook, BsTelegram, BsInstagram, BsTwitch} from 'react-icons/bs'
+import { BsFacebook, BsTelegram, BsInstagram, BsTwitch } from 'react-icons/bs'
 
 const FooterCom = () => {
   return (
@@ -19,6 +19,7 @@ const FooterCom = () => {
               <Footer.Title title='درباره ما' />
               <Footer.LinkGroup col>
                 <Footer.Link
+                  className='margin-right'
                   href='#'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -38,6 +39,7 @@ const FooterCom = () => {
               <Footer.Title title='ما را دنبال کنید' />
               <Footer.LinkGroup col>
                 <Footer.Link
+                  className='margin-right'
                   href='#'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -57,6 +59,7 @@ const FooterCom = () => {
               <Footer.Title title='مجاز' />
               <Footer.LinkGroup col>
                 <Footer.Link
+                  className='margin-right'
                   href='#'
                   target='_blank'
                   rel='noopener noreferrer'
@@ -76,12 +79,12 @@ const FooterCom = () => {
         </div>
         <Footer.Divider />
         <div className='w-full sm:flex sm:items-center sm:justify-between'>
-          <Footer.Copyright href='#' by=' علیرضا چراغ زاده' year={new Date().getFullYear()}/>
+          <Footer.Copyright href='#' by=' علیرضا چراغ زاده' year={new Date().getFullYear()} />
           <div className='flex gap-8 sm:mt-0 mt-4 sm:justify-center'>
-            <Footer.Icon href='#' icon={BsFacebook}/>
-            <Footer.Icon href='#' icon={BsInstagram}/>
-            <Footer.Icon href='#' icon={BsTelegram}/>
-            <Footer.Icon href='#' icon={BsTwitch}/>
+            <Footer.Icon className='hover:text-blue-400 transition' href='#' icon={BsFacebook} />
+            <Footer.Icon className='hover:text-red-400 transition'  href='#' icon={BsInstagram} />
+            <Footer.Icon className='hover:text-blue-400 transition'  href='#' icon={BsTelegram} />
+            <Footer.Icon className='hover:text-purple-400 transition'  href='#' icon={BsTwitch} />
           </div>
         </div>
       </div>
