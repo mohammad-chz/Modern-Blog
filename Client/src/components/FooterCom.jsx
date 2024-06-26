@@ -14,7 +14,7 @@ const FooterCom = () => {
               چراغ زاده
             </Link>
           </div>
-          <div className='grid grid-cols-2 sm:grid-cols-3 gap-8 mt-4 sm:gap-6'>
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-8 mt-4 md:gap-6'>
             <div>
               <Footer.Title title='درباره ما' />
               <Footer.LinkGroup col>
