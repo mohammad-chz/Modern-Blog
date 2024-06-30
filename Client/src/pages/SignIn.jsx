@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice'
+import Oath from '../components/Oath';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -82,6 +83,7 @@ const SignIn = () => {
                 ) : 'ثبت نام'
               }
             </Button>
+          <Oath />
           </form>
           <div className='mt-2 text-sm'>
             <span>آیا حساب کاربری ندارید؟</span>

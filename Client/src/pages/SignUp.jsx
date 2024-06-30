@@ -1,6 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Oath from '../components/Oath';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
@@ -11,7 +12,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
-
+      
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
@@ -30,7 +31,7 @@ const SignUp = () => {
         setLoading(false)
         return setErrorMessage(data.message);
       }
-      if(res.ok){
+      if (res.ok) {
         navigate('/sign-in');
       }
       setLoading(false);
@@ -92,6 +93,7 @@ const SignUp = () => {
                 ) : 'ثبت نام'
               }
             </Button>
+            <Oath />
           </form>
           <div className='mt-2 text-sm'>
             <span>آیا حساب کاربری دارید؟</span>
