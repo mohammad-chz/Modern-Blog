@@ -10,7 +10,7 @@ const SignIn = () => {
   const { loading, error: errorMessage } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  console.log()
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
