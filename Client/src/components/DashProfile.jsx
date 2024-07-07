@@ -143,7 +143,7 @@ const DashProfile = () => {
                 <TextInput type='text' id='username' placeholder='نام کاربری' defaultValue={currentUser.username} onChange={handleChange} />
                 <TextInput type='email' id='email' placeholder='پست الکترونیک' defaultValue={currentUser.email} onChange={handleChange} />
                 <TextInput type='password' id='password' placeholder='کلمه عبور' onChange={handleChange} />
-                <Button type='submit' gradientDuoTone='purpleToBlue' outline>
+                <Button type='submit' gradientDuoTone='purpleToBlue' outline className='font-bold'>
                     به روز رسانی
                 </Button>
             </form>
