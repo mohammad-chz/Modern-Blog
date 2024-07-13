@@ -11,7 +11,8 @@ import {
     updateFailure,
     deleteUserStart,
     deleteUserSuccess,
-    deleteUserFailure
+    deleteUserFailure,
+    signoutSuccess
 } from '../redux/user/userSlice';
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
@@ -128,13 +129,27 @@ const DashProfile = () => {
                 method: 'DELETE',
             });
             const data = await res.json();
-            if(!res.ok){
+            if (!res.ok) {
                 dispatch(deleteUserFailure(data.message));
-            }else {
+            } else {
                 dispatch(deleteUserSuccess(data));
             }
         } catch (error) {
             dispatch(deleteUserFailure(error.message));
+        }
+    };
+    const handleSignOut = async () => {
+        try {
+            const res = await fetch('api/user/signout', {
+                method: 'POST',
+            });
+            if (!res) {
+                console.log(date.message);
+            } else {
+                dispatch(signoutSuccess());
+            }
+        } catch (error) {
+            console.log(error)
         }
     };
     return (
@@ -176,7 +191,7 @@ const DashProfile = () => {
             </form>
             <div className='flex justify-between text-red-500 mt-5'>
                 <span onClick={() => setShowModal(true)} className='cursor-pointer'>حذف حساب کاربری</span>
-                <span className='cursor-pointer'>خروج از سیستم</span>
+                <span className='cursor-pointer' onClick={handleSignOut}>خروج از سیستم</span>
             </div>
             {updateUserSuccess && (
                 <Alert className='mt-5'>

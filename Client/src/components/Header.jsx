@@ -5,12 +5,30 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
+import {signoutSuccess} from '../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const path = useLocation().pathname;
     const { currentUser } = useSelector(state => state.user);
     const { theme } = useSelector(state => state.theme);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const handleSignOut = async () => {
+        try {
+            const res = await fetch('api/user/signout', {
+                method: 'POST',
+            });
+            if (!res) {
+                console.log(date.message);
+            } else {
+                dispatch(signoutSuccess());
+                navigate('/sign-in');
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    };
     return (
         <Navbar className='border-b-2'>
             <Navbar.Toggle />
@@ -58,7 +76,7 @@ const Header = () => {
                             <DropdownItem>مشخصات</DropdownItem>
                         </Link>
                         <DropdownDivider />
-                        <DropdownItem>
+                        <DropdownItem onClick={handleSignOut}>
                             خروج از سیستم
                         </DropdownItem>
                     </Dropdown>
