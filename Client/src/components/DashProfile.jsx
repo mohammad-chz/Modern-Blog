@@ -1,6 +1,7 @@
 import { Alert, Button, Modal, ModalHeader, TextInput } from 'flowbite-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../fireBase';
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -18,7 +19,7 @@ import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
 
 const DashProfile = () => {
-    const { currentUser, error } = useSelector(state => state.user);
+    const { currentUser, error, loading } = useSelector(state => state.user);
     const [imageFile, setImageFile] = useState(null);
     const [imageFileUrl, setImageFileUrl] = useState(null);
     const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -152,6 +153,7 @@ const DashProfile = () => {
             console.log(error)
         }
     };
+
     return (
         <div className='max-w-lg mx-auto p-3 w-full'>
             <h1 className='my-7 text-center font-bold text-2xl'>مشخصات</h1>
@@ -185,9 +187,22 @@ const DashProfile = () => {
                 <TextInput type='text' id='username' placeholder='نام کاربری' defaultValue={currentUser.username} onChange={handleChange} />
                 <TextInput type='email' id='email' placeholder='پست الکترونیک' defaultValue={currentUser.email} onChange={handleChange} />
                 <TextInput type='password' id='password' placeholder='کلمه عبور' onChange={handleChange} />
-                <Button type='submit' gradientDuoTone='purpleToBlue' outline className='font-bold'>
-                    به روز رسانی
+                <Button type='submit' gradientDuoTone='purpleToBlue' outline className='font-bold' disabled={loading || imageFileUploading}>
+                      {loading ? 'در حال بارگذاری...' : 'به روز رسانی'}
                 </Button>
+                {
+                    currentUser.isAdmin && (
+                        <Link to='/create/post'>
+                            <Button
+                                type='button'
+                                gradientDuoTone='purpleToPink'
+                                className='w-full'
+                            >
+                                یک پست ایجاد کنید
+                            </Button>
+                        </Link>
+                    )
+                }
             </form>
             <div className='flex justify-between text-red-500 mt-5'>
                 <span onClick={() => setShowModal(true)} className='cursor-pointer'>حذف حساب کاربری</span>

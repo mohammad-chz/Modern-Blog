@@ -9,6 +9,8 @@ import Header from './components/Header'
 import FooterCom from './components/FooterCom'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
+import OnlyAdminPrivateRouter from './components/OnlyAdminPrivateRouter'
+import CreatePost from './pages/CreatePost'
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,6 +23,9 @@ const App = () => {
         <Route path='/projects' element={<Projects />} />
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
+        <Route element={<OnlyAdminPrivateRouter />}>
+          <Route path='/create/post' element={<CreatePost />} />
         </Route>
       </Routes>
       <FooterCom />
