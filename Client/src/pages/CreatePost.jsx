@@ -6,12 +6,15 @@ import 'react-quill/dist/quill.snow.css';
 import { app } from '../fireBase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
     const [file, setFile] = useState(null);
     const [imageUploadProgress, setImageUploadProgress] = useState(null);
     const [imageUploadError, setImageUploadError] = useState(null);
-    const [formDate, setFormDate] = useState({});
+    const [formData, setFormData] = useState({});
+    const [publishError, setPublishError] = useState(null);
+    const navigate = useNavigate();
     const handleUploadImage = async () => {
         try {
             if (!file) {
@@ -38,7 +41,7 @@ const CreatePost = () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         setImageUploadProgress(null);
                         setImageUploadError(null);
-                        setFormDate({ ...formDate, image: downloadURL })
+                        setFormData({ ...formData, image: downloadURL })
                     });
                 }
             );
@@ -48,14 +51,44 @@ const CreatePost = () => {
             console.log(error);
         }
     };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch('/api/post/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setPublishError(data.message);
+                return;
+            }
+            if (res.ok) {
+                setPublishError(null);
+                navigate(`/post/${data.slug}`);
+            }
+        } catch (error) {
+            setPublishError('Something went wrong');
+        }
 
+    };
     return (
         <div className='p-3 max-w-3xl mx-auto min-h-screen'>
             <h1 className='text-center text-2xl font-bold'>یک پست ایجاد کنید</h1>
-            <form className='flex flex-col gap-4'>
+            <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
                 <div className='flex flex-col gap-4 sm:flex-row justify-between'>
-                    <TextInput type='text' placeholder='عنوان' required id='title' className='flex-1' />
-                    <Select>
+                    <TextInput
+                        type='text'
+                        placeholder='عنوان'
+                        required
+                        id='title'
+                        className='flex-1'
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    />
+                    <Select onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
                         <option value='uncategorized'>یک دسته را انتخاب کنید</option>
                         <option value='curriculumCounseling'>مشاوره درسی</option>
                         <option value='businessAdvice'>مشاوره کاری</option>
@@ -73,20 +106,29 @@ const CreatePost = () => {
                                 : 'بارگذاری تصویر'
                         }
                     </Button>
-                </div>      
+                </div>
                 {imageUploadError && (
                     <Alert color='failure'>
                         {imageUploadError}
                     </Alert>
                 )}
-                {formDate.image && (
-                    <img src={formDate.image} alt='upload' className='w-full h-72 object-cover'/>
+                {formData.image && (
+                    <img src={formData.image} alt='upload' className='w-full h-72 object-cover' />
                 )}
-                <ReactQuill theme="snow" placeholder='یک چیزی بنویسید...' className='h-72 mb-12 rtl-editor' required />
+                <ReactQuill
+                    theme="snow"
+                    placeholder='یک چیزی بنویسید...'
+                    className='h-72 mb-12 rtl-editor'
+                    required
+                    onChange={(value) => setFormData({ ...formData, content: value })}
+                />
                 <Button type='submit' gradientDuoTone='purpleToPink'>
                     منتشر کردن
                 </Button>
             </form>
+            {publishError && <Alert className='mt-5'>
+                {publishError}
+            </Alert>}
         </div>
     )
 }
