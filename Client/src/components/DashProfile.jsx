@@ -36,7 +36,7 @@ const DashProfile = () => {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 2 * 1024 * 1024) {
-                setImageFileUploadError('تصویر باید کمتر از 2 مگابایت باشد');
+                setImageFileUploadError('تصویر باید کمتر از 5 مگابایت باشد');
                 return;
             }
             setImageFile(file);

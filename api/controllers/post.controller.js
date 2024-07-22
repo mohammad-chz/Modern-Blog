@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
+import { transliterate } from 'transliteration';
 
 export const create = async (req, res, next) => {
     if (!req.user.isAdmin) {
@@ -9,7 +10,8 @@ export const create = async (req, res, next) => {
     if (!req.body.title || !req.body.content) {
         return next(errorHandler(403, 'Please Provide All Required Fields'));
     };
-    const slug = req.body.title
+    const transliteratedTitle = transliterate(req.body.title);
+    const slug = transliteratedTitle
         .split(' ')
         .join('-')
         .toLowerCase()
@@ -68,6 +70,18 @@ export const getposts = async (req, res, next) => {
             totalPosts,
             lastMonthPosts,
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deletePost = async (req, res, next) => {
+    if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+        return next(errorHandler(403, 'You are not allowed to delete this post'));
+    }
+    try {
+        await Post.findByIdAndDelete(req.params.postId);
+        res.status(200).json('The post has been deleted');
     } catch (error) {
         next(error);
     }
