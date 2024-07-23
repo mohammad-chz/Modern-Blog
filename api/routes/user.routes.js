@@ -7,6 +7,6 @@ router.get('/test', test);
 router.put('/update/:userId', veryfyToken, UpdateUser);
 router.delete('/delete/:userId', veryfyToken, deleteUser);
 router.post('/signout', signout);
-router.get('/getusers', veryfyToken, getUsers) 
+router.get('/getusers', veryfyToken, getUsers);
 
 export default router;
