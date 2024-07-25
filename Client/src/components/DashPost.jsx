@@ -118,7 +118,7 @@ const DashPost = () => {
           )}
         </>
       ) : (
-        <p>شما هنوز پستی ندارید</p>
+        <p className='font-bold text-xl'>شما هنوز پستی ندارید</p>
       )}
       <Modal
         show={showModal}

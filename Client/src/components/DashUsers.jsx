@@ -107,7 +107,7 @@ const DashUsers = () => {
                     )}
                 </>
             ) : (
-                <p>شما هنوز کاربری ندارید</p>
+                <p className='font-bold text-xl'>شما هنوز کاربری ندارید</p>
             )}
             <Modal
                 show={showModal}

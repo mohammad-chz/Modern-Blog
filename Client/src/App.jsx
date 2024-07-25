@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute'
 import OnlyAdminPrivateRouter from './components/OnlyAdminPrivateRouter'
 import CreatePost from './pages/CreatePost'
 import UpdatePost from './pages/UpdatePost'
+import PostPage from './pages/PostPage'
 const App = () => {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/projects' element={<Projects />} />
+        <Route path='/post/:postSlug' element={<PostPage />} />
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>

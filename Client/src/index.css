@@ -5,19 +5,20 @@
 @font-face {
   font-family: 'vazir';
   src: url('./fonts/Vazir-Regular.woff2') format('woff2'),
-       url('./fonts/Vazir-Regular.ttf') format('truetype');
+    url('./fonts/Vazir-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'vazir';
   src: url('./fonts/Vazir-Bold.woff2') format('woff2'),
-       url('./fonts/Vazir-Bold.ttf') format('truetype');
+    url('./fonts/Vazir-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
-body{
+body {
   font-family: 'vazir';
   display: block !important;
   height: 100vh;
@@ -35,4 +36,42 @@ body{
   direction: rtl;
   text-align: right;
   font-size: 1.05rem;
+}
+
+.post-content {
+  margin-bottom: 0.5rem;
+}
+.post-content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.post-content h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'vazir';
+  margin: 1.5rem 0;
+}
+
+.post-content h2,
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-family: 'vazir';
+  margin: 1.5rem 0;
+}
+
+.post-content a {
+  color: rgb(73, 149, 199);
+  text-decoration: none;
+}
+
+.post-content a:hover {
+  text-decoration: underline;
+}
+.dark .post-content a{
+  color: red;
 }
