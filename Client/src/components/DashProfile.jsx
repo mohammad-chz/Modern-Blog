@@ -157,7 +157,7 @@ const DashProfile = () => {
     return (
         <div className='max-w-lg mx-auto p-3 w-full'>
             <h1 className='my-7 text-center font-bold text-2xl'>مشخصات</h1>
-            <form onSubmit={handleSubmit} className='flex flex-col gap-4 md:w-96'>
+            <form onSubmit={handleSubmit} className='flex flex-col justify-center gap-4 '>
                 <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden />
                 <div className='relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full' onClick={() => filePickerRef.current.click()}>
                     {imageFileUploadProgress && (
