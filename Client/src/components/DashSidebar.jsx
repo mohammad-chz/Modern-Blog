@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems } from 'flowbite-react';
-import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup  } from 'react-icons/hi'
+import { Button, Sidebar, SidebarItem, SidebarItemGroup, SidebarItems } from 'flowbite-react';
+import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup } from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { signoutSuccess } from '../redux/user/userSlice';
+import { FaMoon, FaSun } from 'react-icons/fa';
+import { toggleTheme } from '../redux/theme/themeSlice';
 
 const DashSidebar = () => {
     const { currentUser } = useSelector(state => state.user);
+    const { theme } = useSelector(state => state.theme);
     const location = useLocation();
     const [tab, setTab] = useState('');
     const dispatch = useDispatch();
@@ -59,6 +62,16 @@ const DashSidebar = () => {
                     <SidebarItem icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignOut}>
                         خروج از سیستم
                     </SidebarItem>
+                    <div>
+                        <Button
+                            className='w-12 block sm:hidden'
+                            color="gray"
+                            pill
+                            onClick={() => dispatch(toggleTheme())}
+                        >
+                            {theme === 'light' ? <FaSun /> : <FaMoon />}
+                        </Button>
+                    </div>
                 </SidebarItemGroup>
             </SidebarItems>
         </Sidebar >
