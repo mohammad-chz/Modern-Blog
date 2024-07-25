@@ -25,7 +25,7 @@ const CommentSection = ({ postId }) => {
                 setCommentError(null);
             }
         } catch (error) {
-            setCommentError(error.messsage);
+            setCommentError(error.message);
         }
 
     };
