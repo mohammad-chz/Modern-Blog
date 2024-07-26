@@ -7,14 +7,12 @@ import Oath from '../components/Oath';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const { loading, error: errorMessage } = useSelector(state => state.user);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log()
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
