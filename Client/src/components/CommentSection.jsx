@@ -17,7 +17,7 @@ const CommentSection = ({ postId }) => {
         }
         try {
             const res = await fetch('/api/comment/create', {
-                method: 'PUT',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ content: comment, postId, userId: currentUser._id }),
             });
