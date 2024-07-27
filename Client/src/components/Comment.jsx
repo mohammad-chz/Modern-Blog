@@ -20,6 +20,7 @@ const Comment = ({ comment, onLike }) => {
         };
         getUser();
     }, [comment])
+    console.log(comment)
     return (
         <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
             <div className="flex-shrink-0 ml-3">
