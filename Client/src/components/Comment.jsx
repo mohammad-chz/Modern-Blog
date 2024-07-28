@@ -33,7 +33,7 @@ const Comment = ({ comment, onLike, onEdit }) => {
                     method: 'PUT',
                     headers: {
              'Content-Type': 'application/json'},
-                    body: JSON.stringify({content: editedContent}),
+                body: JSON.stringify({content: editedContent}),
                 });
                 if(res.ok){
                     setIsEditing(false);
