@@ -41,7 +41,7 @@ const Comment = ({ comment, onLike, onEdit }) => {
                 onEdit(comment, editedContent);
             }
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     }
     return (
