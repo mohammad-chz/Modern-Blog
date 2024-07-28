@@ -31,7 +31,8 @@ const Comment = ({ comment, onLike, onEdit }) => {
             try {
                 const res = await fetch(`/api/comment/editComment/${comment._id}`, {
                     method: 'PUT',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json'},
                     body: JSON.stringify({content: editedContent}),
                 });
                 if(res.ok){
