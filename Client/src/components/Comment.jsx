@@ -23,7 +23,10 @@ const Comment = ({ comment, onLike, onEdit }) => {
         };
         getUser();
     }, [comment])
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     const handleEdit = () => {
         setIsEditing(true);
         setEditedContent(comment.content);
@@ -33,8 +36,13 @@ const Comment = ({ comment, onLike, onEdit }) => {
                 const res = await fetch(`/api/comment/editComment/${comment._id}`, {
                     method: 'PUT',
                     headers: {
+<<<<<<< Updated upstream
     'Content-Type': 'application/json'},
                 body: JSON.stringify({content: editedContent}),
+=======
+                'Content-Type': 'application/json'},
+                    body: JSON.stringify({content: editedContent}),
+>>>>>>> Stashed changes
                 });
                 if(res.ok){
                     setIsEditing(false);
@@ -44,9 +52,12 @@ const Comment = ({ comment, onLike, onEdit }) => {
                 console.log(error.message);
             }
     }
+<<<<<<< Updated upstream
 =======
     console.log(comment)
 >>>>>>> 84c0f29070e6b368355be8413883670104f569fb
+=======
+>>>>>>> Stashed changes
     return (
         <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
             <div className="flex-shrink-0 ml-3">
