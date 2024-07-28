@@ -3,11 +3,13 @@ import moment from 'moment';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Comment = ({ comment, onLike, onEdit }) => {
     const { currentUser } = useSelector(state => state.user);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(comment.content);
+    const navigate = useNavigate();
     const [user, setUser] = useState({});
     useEffect(() => {
         const getUser = async () => {
@@ -70,13 +72,21 @@ const Comment = ({ comment, onLike, onEdit }) => {
                     <>
                         <p className='text-gray-500 pb-2'>{comment.content}</p>
                         <div className="flex items-center gap-2 pt-2 text-xs border-t dark:border-gray-700 max-w-fit">
-                            <button
-                                type='button'
-                                onClick={() => onLike(comment._id)}
-                                className={`text-gray-400 hover:text-blue-500 ${comment.likes.includes(currentUser._id) && '!text-blue-500'}`}
-                            >
-                                <FaThumbsUp className='text-sm' />
-                            </button>
+                            {currentUser ?
+                                <button
+                                    type='button'
+                                    onClick={() => onLike(comment._id)}
+                                    className={`text-gray-400 hover:text-blue-500 ${comment.likes.includes(currentUser._id) && '!text-blue-500'}`}
+                                >
+                                    <FaThumbsUp className='text-sm' />
+                                </button> :
+                                <div>
+                                    <Link to='/sign-in'>
+                                        <FaThumbsUp className='text-sm hover:text-blue-500' />
+                                    </Link>
+                                </div>
+
+                            }
                             {comment.numberOfLikes > 0 && (
                                 <p className='text-gray-500'>
                                     {comment.numberOfLikes === 1
