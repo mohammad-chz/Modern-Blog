@@ -41,7 +41,7 @@ const CommentSection = ({ postId }) => {
                     setComments(data);
                 }
             } catch (error) {
-                console.log(error.message);
+                console.log(error);
             }
         };
         getComments();
