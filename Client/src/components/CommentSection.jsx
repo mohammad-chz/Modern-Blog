@@ -17,11 +17,11 @@ const CommentSection = ({ postId }) => {
         }
         try {
             const res = await fetch('/api/comment/create',
-                 {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: comment, postId, userId: currentUser._id }),
-            });
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: comment, postId, userId: currentUser._id }),
+                });
             const data = await res.json();
             if (res.ok) {
                 setComment('');
@@ -82,6 +82,18 @@ const CommentSection = ({ postId }) => {
             )
         );
     };
+    const handleDelete = async (commentId) => {
+        try {
+            const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
+                method: 'DELETE'
+            });
+            if(res.ok){
+                setComments(comments.filter((c) => c._id !== commentId));
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
     return (
         <div className='max-w-2xl mx-auto w-full p-3'>
             {currentUser ? (
@@ -130,7 +142,7 @@ const CommentSection = ({ postId }) => {
                         <div className="border border-gray-400 py-1 px-2 rounded-sm">{comments.length}</div>
                     </div>
                     {comments.map((comment) => (
-                        <Comment key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit} />
+                        <Comment key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit} onDelete={handleDelete} />
                     ))}
                 </>
             )}

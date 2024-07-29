@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
     const { currentUser } = useSelector(state => state.user);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(comment.content);
@@ -94,12 +94,17 @@ const Comment = ({ comment, onLike, onEdit }) => {
                                         : `${comment.numberOfLikes} نفر این نظر را پسندیدند`}
                                 </p>)}
                             {currentUser && (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                                <button
-                                    type='button'
-                                    onClick={handleEdit}
-                                    className='text-gray-400 hover:text-blue-500'>
-                                    ویرایش
-                                </button>
+                                <>
+                                    <button
+                                        type='button'
+                                        onClick={handleEdit}
+                                        className='text-gray-400 hover:text-blue-500'>
+                                        ویرایش
+                                    </button>
+                                    <button onClick={() => onDelete(comment._id)} className='text-red-500'>
+                                        حذف
+                                    </button>
+                                </>
                             )
                             }
                         </div>
