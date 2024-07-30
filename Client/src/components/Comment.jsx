@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { Button, Textarea } from 'flowbite-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, Modal, Textarea } from 'flowbite-react';
+import { Link } from 'react-router-dom';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
     const { currentUser } = useSelector(state => state.user);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(comment.content);
-    const navigate = useNavigate();
+    const [isDelete, setIsDelete] = useState(false);
     const [user, setUser] = useState({});
     useEffect(() => {
         const getUser = async () => {
@@ -98,10 +99,11 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
                                     <button
                                         type='button'
                                         onClick={handleEdit}
+                                        
                                         className='text-gray-400 hover:text-blue-500'>
                                         ویرایش
                                     </button>
-                                    <button onClick={() => onDelete(comment._id)} className='text-red-500'>
+                                    <button onClick={() => setIsDelete(true)} className='text-red-500'>
                                         حذف
                                     </button>
                                 </>
@@ -109,10 +111,31 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
                             }
                         </div>
                     </>
-
                 }
-
             </div>
+            {isDelete &&
+                <Modal
+                    show={isDelete}
+                    onClose={() => setIsDelete(false)}
+                    popup
+                    size='md'
+                >
+                    <Modal.Header />
+                    <Modal.Body>
+                        <div className="text-center">
+                            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+                            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>آیا مطمئن هستید که می خواهید پست خود را حذف کنید؟</h3>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <Button color='failure' onClick={() => onDelete(comment._id)}>بله، مطمئنم
+                            </Button>
+                            <Button color='gray' onClick={() => setIsDelete(false)}>
+                                نه، لغو شود
+                            </Button>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            }
         </div>
     )
 }

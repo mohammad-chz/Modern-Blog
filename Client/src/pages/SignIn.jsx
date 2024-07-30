@@ -78,7 +78,7 @@ const SignIn = () => {
                     <Spinner size='sm' />
                     <span className='mr-2'>درحال بارگذاری...</span>
                   </>
-                ) : 'ثبت نام'
+                ) : 'ورود'
               }
             </Button>
           <Oath />

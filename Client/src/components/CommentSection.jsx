@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
+import RecentPost from './RecentPost';
 
 const CommentSection = ({ postId }) => {
     const { currentUser } = useSelector(state => state.user);
@@ -10,6 +11,7 @@ const CommentSection = ({ postId }) => {
     const [comment, setComment] = useState('');
     const [commentError, setCommentError] = useState(null);
     const [comments, setComments] = useState([]);
+    const [recentPosts, setRecentPoats] = useState([]);
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (comment.length > 200) {
@@ -36,7 +38,9 @@ const CommentSection = ({ postId }) => {
     useEffect(() => {
         const getComments = async () => {
             try {
-                const res = await fetch(`/api/comment/getPostComments/${postId}`);
+                const res = await fetch(`/api/comment/getPostComments/${postId}`, {
+                    method: "GET"
+                });
                 if (res.ok) {
                     const data = await res.json();
                     setComments(data);
@@ -47,6 +51,15 @@ const CommentSection = ({ postId }) => {
         };
         getComments();
     }, [postId]);
+
+    useEffect(() => {
+        const getRecentPosts = async () => {
+            const res = await fetch('/api/post/getposts?limit=3');
+            const data = await res.json();
+            setRecentPoats(data.posts);
+        };
+        getRecentPosts();
+    }, []);
 
     const handleLike = async (commentId) => {
         try {
@@ -87,7 +100,7 @@ const CommentSection = ({ postId }) => {
             const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
                 method: 'DELETE'
             });
-            if(res.ok){
+            if (res.ok) {
                 setComments(comments.filter((c) => c._id !== commentId));
             }
         } catch (error) {
@@ -146,6 +159,12 @@ const CommentSection = ({ postId }) => {
                     ))}
                 </>
             )}
+            <div className='flex flex-col gap-4 sm:flex-row my-12'>
+                {recentPosts.length > 0 && recentPosts.map((post) => (
+                    <RecentPost key={post._id} post={post} />
+                ))
+                }
+            </div>
         </div>
     )
 }
