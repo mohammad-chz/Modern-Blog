@@ -159,12 +159,15 @@ const CommentSection = ({ postId }) => {
                     ))}
                 </>
             )}
-            <div className='flex flex-col gap-4 sm:flex-row my-12'>
+            <>
+            <h1 className='text-xl text-center font-bold mt-6 mb-2'>مقاله های اخیر</h1>
+            <div className='flex flex-col gap-4 sm:flex-row mb-6'>
                 {recentPosts.length > 0 && recentPosts.map((post) => (
                     <RecentPost key={post._id} post={post} />
                 ))
                 }
             </div>
+            </>
         </div>
     )
 }

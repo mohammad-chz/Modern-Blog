@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { signoutSuccess } from '../redux/user/userSlice';
-import { FaMoon, FaSun } from 'react-icons/fa';
+import { FaMoon, FaSun, FaComment  } from 'react-icons/fa';
 import { toggleTheme } from '../redux/theme/themeSlice';
 
 const DashSidebar = () => {
@@ -56,6 +56,13 @@ const DashSidebar = () => {
                         <Link to='/dashboard?tab=users'>
                             <SidebarItem active={tab === 'users'} icon={HiOutlineUserGroup} as='div'>
                                 کاربران
+                            </SidebarItem>
+                        </Link>
+                    )}
+                    {currentUser.isAdmin && (
+                        <Link to='/dashboard?tab=comments'>
+                            <SidebarItem active={tab === 'comments'} icon={FaComment} as='div'>
+                                نظرات
                             </SidebarItem>
                         </Link>
                     )}
