@@ -48,11 +48,11 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
         }
     }
     return (
-        <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
+        <div className='flex p-4 border-b dark:border-gray-600 text-sm '>
             <div className="flex-shrink-0 ml-3">
                 <img className='w-10 h-10 rounded-full bg-gray-200' src={user.profilePicture} alt={user.username} />
             </div>
-            <div className='flex-1'>
+            <div className='flex-1 overflow-hidden'>
                 <div className='flex items-center mb-1'>
                     <span className='font-bold mr-1 text-xs truncate'>{user ? user.username : 'کاربر ناشناس'}@</span>
                     <span className='text-gray-500 text-xs'>{moment(comment.createdAt).fromNow()}</span>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Sidebar, SidebarItem, SidebarItemGroup, SidebarItems } from 'flowbite-react';
 import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup } from 'react-icons/hi'
+import { AiFillDashboard } from "react-icons/ai";
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { signoutSuccess } from '../redux/user/userSlice';
-import { FaMoon, FaSun, FaComment  } from 'react-icons/fa';
+import { FaMoon, FaSun, FaComment } from 'react-icons/fa';
 import { toggleTheme } from '../redux/theme/themeSlice';
 
 const DashSidebar = () => {
@@ -40,6 +41,13 @@ const DashSidebar = () => {
         <Sidebar className='w-full md:w-56'>
             <SidebarItems>
                 <SidebarItemGroup className='flex flex-col gap-1'>
+                    {currentUser.isAdmin && (
+                        <Link to='/dashboard?tab=dashboard'>
+                            <SidebarItem active={tab === 'dashboard'} icon={AiFillDashboard} as='div'>
+                                داشبورد
+                            </SidebarItem>
+                        </Link>
+                    )}
                     <Link to='/dashboard?tab=profile'>
                         <SidebarItem active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'مدیر' : 'کاربر'} labelColor='dark' as='div'>
                             مشخصات
