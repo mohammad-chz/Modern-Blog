@@ -103,7 +103,7 @@ const CreatePost = () => {
                     </Alert>
                 )}
                 {formData.image && (
-                    <img src={`http://localhost:3000${formData.image}`} alt='upload' className='w-full h-72 object-cover' />
+                    <img src={`https://modern-blog-v7km.onrender.com${formData.image}`} alt='upload' className='w-full h-72 object-cover' />
                 )}
                 <ReactQuill
                     theme="snow"
