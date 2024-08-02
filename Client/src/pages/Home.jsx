@@ -26,7 +26,7 @@ const Home = () => {
           <button className='text-start text-teal-500 hover:underline'>مشاهده همه پست ها</button>
         </Link>
       </div>
-      <div className='bg-amber-100 p-3'>
+      <div className='bg-amber-100 dark:bg-gray-800 p-3'>
         <CallToAction />
       </div>
       <div className='mt-8 max-w-6xl mx-auto'>

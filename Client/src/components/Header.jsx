@@ -30,14 +30,14 @@ const Header = () => {
             const res = await fetch('api/user/signout', {
                 method: 'POST',
             });
-            if (!res.ok) {
+            if (!res) {
                 console.log(date.message);
             } else {
                 dispatch(signoutSuccess());
                 navigate('/sign-in');
             }
         } catch (error) {
-            console.log("Error signing out");
+            console.log(error)
         }
     };
     const handleSubmit = (e) =>{
@@ -45,7 +45,7 @@ const Header = () => {
         const urlParams = new URLSearchParams(location.search);
         urlParams.set('searchTerm', searchTerm);
         const searchQuery = urlParams.toString();
-        navigate(`/search?${searchQuery}`)
+        navigate(`/search?${searchQuery}`);
     };
     return (
         <Navbar className='border-b-2'>
