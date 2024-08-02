@@ -175,7 +175,7 @@ const DashboardAdmin = () => {
                         </div>
                         {posts && posts.map((post) => (
                             <div key={post._id} className='flex justify-between items-center mb-8'>
-                                <img className='w-10 h-10 rounded-full' src={post.image} alt="user's image" />
+                                <img className='w-10 h-10 rounded-full' src={`https://modern-blog-v7km.onrender.com${post.image}`} alt="user's image" />
                                 <p>{post.title}</p>
                             </div>
                         ))}

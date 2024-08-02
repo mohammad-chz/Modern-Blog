@@ -1,46 +1,56 @@
 import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
 import React, { useState } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { app } from '../fireBase';
+import { useNavigate } from 'react-router-dom';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
     const [file, setFile] = useState(null);
-    const [imageUploadProgress, setImageUploadProgress] = useState(null);
+    const [imageUploadProgress, setImageUploadProgress] = useState(0);
     const [imageUploadError, setImageUploadError] = useState(null);
     const [formData, setFormData] = useState({});
     const [publishError, setPublishError] = useState(null);
     const navigate = useNavigate();
-    const handleUploadImage = async () => {
-        try {
-            if (!file) {
-                setImageUploadError('لطفا یک تصویر را انتخاب کنید');
-                return;
-            }
-            setImageUploadError(null);
-            const formData = new FormData();
-            formData.append('image', file);
-            
-            const response = await fetch('/api/post/upload-image', {
-                method: 'POST',
-                body: formData
-            });
-    
-            if (!response.ok) {
-                throw new Error('Image upload failed');
-            }
-    
-            const data = await response.json();
-            setFormData({ ...formData, image: data.filePath });
-        } catch (error) {
-            setImageUploadError('آپلود تصویر انجام نشد');
-            console.log(error);
+
+    const handleUploadImage = () => {
+        if (!file) {
+            setImageUploadError('لطفا یک تصویر را انتخاب کنید');
+            return;
         }
+        setImageUploadError(null);
+
+        const formDataToSend = new FormData();
+        formDataToSend.append('image', file);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/post/upload-image', true);
+
+        xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+                const progress = Math.round((event.loaded / event.total) * 100);
+                setImageUploadProgress(progress);
+            }
+        };
+
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                setFormData(prevFormData => ({ ...prevFormData, image: data.filePath }));
+                setImageUploadProgress(0); // Reset progress after successful upload
+            } else {
+                setImageUploadError('آپلود تصویر انجام نشد');
+            }
+        };
+
+        xhr.onerror = () => {
+            setImageUploadError('خطا در آپلود تصویر');
+        };
+
+        xhr.send(formDataToSend);
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -52,19 +62,19 @@ const CreatePost = () => {
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
+            
             if (!res.ok) {
                 setPublishError(data.message);
                 return;
             }
-            if (res.ok) {
-                setPublishError(null);
-                navigate(`/post/${data.slug}`);
-            }
+            
+            setPublishError(null);
+            navigate(`/post/${data.slug}`);
         } catch (error) {
             setPublishError('Something went wrong');
         }
-
     };
+
     return (
         <div className='p-3 max-w-3xl mx-auto min-h-screen'>
             <h1 className='text-center text-2xl font-bold'>یک پست ایجاد کنید</h1>
@@ -76,9 +86,9 @@ const CreatePost = () => {
                         required
                         id='title'
                         className='flex-1'
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                        onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                     />
-                    <Select onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
+                    <Select onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}>
                         <option value='uncategorized'>یک دسته را انتخاب کنید</option>
                         <option value='curriculumCounseling'>مشاوره درسی</option>
                         <option value='businessAdvice'>مشاوره کاری</option>
@@ -87,11 +97,11 @@ const CreatePost = () => {
                 </div>
                 <div className='flex gap-4 items-center justify-between border-4 border-teal-400 border-dotted p-3'>
                     <FileInput type="file" accept='image/*' onChange={(e) => setFile(e.target.files[0])} />
-                    <Button type='button' gradientDuoTone='purpleToBlue' size='sm' outline onClick={handleUploadImage} disabled={imageUploadProgress}>
+                    <Button type='button' gradientDuoTone='purpleToBlue' size='sm' outline onClick={handleUploadImage} disabled={imageUploadProgress > 0}>
                         {
-                            imageUploadProgress ?
+                            imageUploadProgress > 0 ?
                                 <div className='w-16 h-16'>
-                                    <CircularProgressbar value={imageUploadProgress} text={`${imageUploadProgress || 0}%`} />
+                                    <CircularProgressbar value={imageUploadProgress} text={`${imageUploadProgress}%`} />
                                 </div>
                                 : 'بارگذاری تصویر'
                         }
@@ -110,17 +120,19 @@ const CreatePost = () => {
                     placeholder='یک چیزی بنویسید...'
                     className='h-72 mb-12 rtl-editor'
                     required
-                    onChange={(value) => setFormData({ ...formData, content: value })}
+                    onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
                 />
                 <Button type='submit' gradientDuoTone='purpleToPink'>
                     منتشر کردن
                 </Button>
             </form>
-            {publishError && <Alert className='mt-5'>
-                {publishError}
-            </Alert>}
+            {publishError && (
+                <Alert className='mt-5'>
+                    {publishError}
+                </Alert>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default CreatePost;
