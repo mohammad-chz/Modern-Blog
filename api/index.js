@@ -32,6 +32,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoute);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.static(path.join(__dirname, '/Client/dist')));
 

@@ -22,32 +22,22 @@ const CreatePost = () => {
                 return;
             }
             setImageUploadError(null);
-            const storage = getStorage(app);
-            const fileName = new Date().getTime() + '-' + file.name;
-            const storageRef = ref(storage, fileName);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    const progress =
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    setImageUploadProgress(progress.toFixed(0));
-                },
-                (error) => {
-                    setImageUploadError('آپلود تصویر انجام نشد');
-                    setImageUploadProgress(null);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        setImageUploadProgress(null);
-                        setImageUploadError(null);
-                        setFormData({ ...formData, image: downloadURL })
-                    });
-                }
-            );
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('/api/post/upload-image', {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (!response.ok) {
+                throw new Error('Image upload failed');
+            }
+    
+            const data = await response.json();
+            setFormData({ ...formData, image: data.filePath });
         } catch (error) {
             setImageUploadError('آپلود تصویر انجام نشد');
-            setImageUploadProgress(null);
             console.log(error);
         }
     };
@@ -113,7 +103,7 @@ const CreatePost = () => {
                     </Alert>
                 )}
                 {formData.image && (
-                    <img src={formData.image} alt='upload' className='w-full h-72 object-cover' />
+                    <img src={`http://localhost:3000${formData.image}`} alt='upload' className='w-full h-72 object-cover' />
                 )}
                 <ReactQuill
                     theme="snow"
