@@ -116,7 +116,7 @@ const UpdatePost = () => {
                     />
                     <Select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
                         <option value='uncategorized'>یک دسته را انتخاب کنید</option>
-                        <option value='curriculumCounseling'>مشاوره درسی</option>
+                        <option value='مشاوره-درسی'>مشاوره درسی</option>
                         <option value='businessAdvice'>مشاوره کاری</option>
                         <option value='otherThings'>موارد دیگر</option>
                     </Select>

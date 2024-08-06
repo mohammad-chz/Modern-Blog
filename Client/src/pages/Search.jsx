@@ -118,7 +118,7 @@ const Search = () => {
                         <label className='whitespace-nowrap font-bold'> دسته بندی:</label>
                         <Select onChange={handleChange} value={sidebarData.category} id='category'>
                             <option value='uncategorized'>یک دسته را انتخاب کنید</option>
-                            <option value='curriculumCounseling'>مشاوره درسی</option>
+                            <option value='مشاوره-درسی'>مشاوره درسی</option>
                             <option value='businessAdvice'>مشاوره کاری</option>
                             <option value='otherThings'>موارد دیگر</option>
                         </Select>
